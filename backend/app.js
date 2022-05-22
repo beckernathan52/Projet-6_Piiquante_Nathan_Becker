@@ -1,21 +1,25 @@
-// Importation des modules
-const express = require('express');
-const mongoose = require('mongoose');
-
-// Création de l'application Express
-const appExpress = express();
+// Importation des dépendances
+import * as express from 'express'
+import * as mongoose from 'mongoose'
 
 // Importation des routes
-const userRoutes = require('./routes/user');
+import {routerUser} from './routes/user.js'
 
-
+// Création de l'application Express
+const appExpress = express()
 
 // Connexion à la base de données MongoDB
-mongoose.connect('mongodb+srv://Nathanb:8No67MP6FDTMpbZu@cluster0.oe8xh.mongodb.net/?retryWrites=true&w=majority',
-    { useNewUrlParser: true,
-        useUnifiedTopology: true })
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.DATABASE_CONNECTION,
+            { useNewUrlParser: true,
+                useUnifiedTopology: true })
+        console.log('Connexion à MongoDB réussie !')
+    } catch {
+        console.log('Connexion à MongoDB échouée !')
+    }
+}   
+connectDB()
 
 // Analyse du corps de la requête
 appExpress.use(express.json());
@@ -28,9 +32,8 @@ appExpress.use((req, res, next) => {
     next();
 });
 
-
 // Routes
-appExpress.use('/api/auth', userRoutes);
+appExpress.use('/api/auth', routerUser);
 
-// Exportation de l'application
-module.exports = appExpress;
+// Exportation de l'application Express
+export {appExpress}

@@ -1,13 +1,12 @@
 // Importation des dépendances
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
+import * as bcrypt from 'bcrypt'
+import * as jwt from 'jsonwebtoken'
 
 // Importation des informations de l'utilisateur
-const User = require('../models/user')
-
+import {User} from '../models/user.js'
 
 // Inscription
-exports.signup = (req, res, next) => {
+const signup = (req, res, next) => {
     // Crée un hash crypté du mot de passe de l'utilisateur, hash 10 fois
     bcrypt.hash(req.body.password, 10)
 
@@ -26,7 +25,7 @@ exports.signup = (req, res, next) => {
 };
 
 // Connexion
-exports.login = (req, res, next) => {
+const login = (req, res, next) => {
     // Tente de trouver une adresse mail identique entre la base de données et la requête
     User.findOne({ email: req.body.email })
 
@@ -57,3 +56,6 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
+
+// Exportation
+export {signup, login}

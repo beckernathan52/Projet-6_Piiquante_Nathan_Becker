@@ -1,5 +1,5 @@
 // Importation des dépendances
-const jwt = require('jsonwebtoken');
+import * as jwt from 'jsonwebtoken'
 
 // Midldleware d'authentification
 module.exports = (req, res, next) => {
@@ -25,4 +25,4 @@ module.exports = (req, res, next) => {
         error: new Error('Requête invalide!')
         });
     }
-};
+}
