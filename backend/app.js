@@ -1,9 +1,11 @@
 // Importation des dépendances
-import * as express from 'express'
-import * as mongoose from 'mongoose'
+import express from 'express'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config();
 
 // Importation des routes
-import {routerUser} from './routes/user.js'
+import { routerUser } from './routes/user.js'
 
 // Création de l'application Express
 const appExpress = express()
@@ -30,10 +32,10 @@ appExpress.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
-});
+})
 
 // Routes
-appExpress.use('/api/auth', routerUser);
+appExpress.use('/api/auth', routerUser)
 
 // Exportation de l'application Express
 export {appExpress}

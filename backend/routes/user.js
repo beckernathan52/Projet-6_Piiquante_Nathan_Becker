@@ -1,15 +1,15 @@
-// Importation des modules
-import * as express from 'express'
+// Importation du router
+import { Router } from 'express'
 
 // Création du routeur avec Express
-const routerUser = express.Router()
+const routerUser = Router()
 
 // Importation du controleur utilisateur
 import {signup, login} from '../controllers/user.js'
 
 // Création des routes POST pour l'inscription et la connexion
-router.post('/signup', signup)
-router.post('/login', login)
+routerUser.post('/signup', signup)
+routerUser.post('/login', login)
 
 // Exportation du routeur
 export {routerUser}

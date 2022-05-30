@@ -1,10 +1,10 @@
 // Importation des dépendances
-import * as http from 'http'
-import * as dotenv from 'dotenv'
+import http from 'http'
+import dotenv from 'dotenv'
 dotenv.config();
 
 // Importation de l'application Express
-import {appExpress} from './app.js'
+import { appExpress } from './app.js';
 
 // Renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const normalizePort = val => {
