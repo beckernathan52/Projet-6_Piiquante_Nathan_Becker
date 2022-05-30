@@ -1,15 +1,15 @@
-// Importation des modules
-const express = require('express');
+// Importation du router
+import { Router } from 'express'
 
 // Création du routeur avec Express
-const router = express.Router();
+const routerUser = Router()
 
 // Importation du controleur utilisateur
-const userCtrl = require('../controllers/user');
+import {signup, login} from '../controllers/user.js'
 
 // Création des routes POST pour l'inscription et la connexion
-router.post('/signup', userCtrl.signup);
-router.post('/login', userCtrl.login);
+routerUser.post('/signup', signup)
+routerUser.post('/login', login)
 
 // Exportation du routeur
-module.exports = router;
+export {routerUser}

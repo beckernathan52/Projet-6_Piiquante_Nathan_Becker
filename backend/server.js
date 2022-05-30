@@ -1,8 +1,10 @@
 // Importation des dépendances
-const http = require('http');
-const appExpress = require('./app');
-const dotenv = require("dotenv");
+import http from 'http'
+import dotenv from 'dotenv'
 dotenv.config();
+
+// Importation de l'application Express
+import { appExpress } from './app.js';
 
 // Renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const normalizePort = val => {
@@ -18,11 +20,10 @@ const normalizePort = val => {
 };
 
 // Récupération du port valide
-const port = normalizePort(process.env.PORT);
+const port = normalizePort(process.env.PORT || 3000);
 
 // Indication du port sur lequel doit s'executé l'application
 appExpress.set('port', port);
-
 
 // Recherche les différentes erreurs et les gère de manière appropriée.
 const errorHandler = error => {
@@ -34,11 +35,9 @@ const errorHandler = error => {
     switch (error.code) {
         case 'EACCES':
             console.error(bind + ' requires elevated privileges.');
-            process.exit(1);
             break;
         case 'EADDRINUSE':
             console.error(bind + ' is already in use.');
-            process.exit(1);
             break;
         default:
             throw error;
