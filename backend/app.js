@@ -3,9 +3,12 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 dotenv.config();
+import path  from 'path';
+import { fileURLToPath } from 'url'
 
 // Importation des routes
 import { routerUser } from './routes/user.js'
+import { routerSauces } from './routes/sauce.js';
 
 // Création de l'application Express
 const appExpress = express()
@@ -14,6 +17,7 @@ const appExpress = express()
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.DATABASE_CONNECTION,
+            // @ts-ignore
             { useNewUrlParser: true,
                 useUnifiedTopology: true })
         console.log('Connexion à MongoDB réussie !')
@@ -34,8 +38,14 @@ appExpress.use((req, res, next) => {
     next();
 })
 
+// @ts-ignore
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename);
+
 // Routes
 appExpress.use('/api/auth', routerUser)
+appExpress.use('/api/sauces', routerSauces)
+appExpress.use('/images', express.static(path.join(__dirname, 'images')))
 
 // Exportation de l'application Express
 export {appExpress}
