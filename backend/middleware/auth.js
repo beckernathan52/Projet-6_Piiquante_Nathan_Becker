@@ -14,14 +14,21 @@ const authentication =  (req, res, next) => {
         const userId = decodedToken.userId;
         // Ajout de l'ID utilisateur à la requête
         req.auth = { userId };  
-        
+        // req.auth.userId pour vérifier la modification des sauces
         next();
         
-    } catch {
-        res.status(401).json({
-            error: new Error('Requête invalide!')
-        });
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ error: 'Erreur authentification' })
+        // res.status(401).json({
+        // error: new Error('Requête invalide!')
+            
+        // });
     }
 }
 
 export {authentication}
+
+
+
+// Voir avec Florian pour les problèmes d'authentification

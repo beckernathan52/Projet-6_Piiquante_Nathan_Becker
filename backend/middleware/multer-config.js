@@ -35,6 +35,6 @@ const fileFilter = (req, file, callback) => {
 }
 
 // Single pour indiquer qu'il s'agit d'un fichier unique
-const imgStorage = multer({storage: storage, }).single('image')
+const imgStorage = multer({storage, fileFilter }).single('image')
 
 export {imgStorage}

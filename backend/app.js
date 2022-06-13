@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 dotenv.config();
 import path  from 'path';
 import { fileURLToPath } from 'url'
+import { rateLimit } from 'express-rate-limit';
+
 
 // Importation des routes
 import { routerUser } from './routes/user.js'
@@ -17,7 +19,6 @@ const appExpress = express()
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.DATABASE_CONNECTION,
-            // @ts-ignore
             { useNewUrlParser: true,
                 useUnifiedTopology: true })
         console.log('Connexion à MongoDB réussie !')
@@ -38,7 +39,15 @@ appExpress.use((req, res, next) => {
     next();
 })
 
-// @ts-ignore
+// Limite le nombre de requ^^ete
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+appExpress.use(limiter)
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
 
