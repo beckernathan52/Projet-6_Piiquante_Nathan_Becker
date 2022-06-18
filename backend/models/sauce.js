@@ -1,5 +1,6 @@
 // Importation des dépendances
 import mongoose from 'mongoose';
+import mongooseErrors from 'mongoose-errors';
 
 // Création du modèle sauceSchema
 const sauceSchema =  new mongoose.Schema({
@@ -16,5 +17,9 @@ const sauceSchema =  new mongoose.Schema({
     usersDisliked: { type: [String], required: true, default: [] },
 })
 
+sauceSchema.plugin(mongooseErrors)
+
 const Sauce = mongoose.model('Sauce', sauceSchema)
+
+
 export {Sauce}

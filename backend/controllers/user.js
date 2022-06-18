@@ -14,12 +14,12 @@ const validateEmail = (req) => {
 
 // Vérification du format du mot de passe
 const validatePassword = (req) => {
-    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/.test(req.body.password)
+    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/.test(req.body.password)
 }
 
 // Inscription
 const signup = async (req, res, next) => {
-    
+
     // Vérifie si l'email et le mot de passe ont un format valide
     const emailValid = validateEmail(req)
     const passwordValid = validatePassword(req)
@@ -54,7 +54,7 @@ const signup = async (req, res, next) => {
         return res.status(201).json({ message: 'Utilisateur créé !' })
 
     } catch (error) {
-        res.status(500).json
+        res.status(500).json()
         console.log(error)
     }
 }
@@ -82,23 +82,19 @@ const login = async (req, res, next) => {
             return res.status(401).json({ error: 'Utilisateur ou mot de passe invalide !' })
         }  
         
-        try {
-            // Compare le mot de passe de la requête avec celui de la base de donnée
-            const match = await bcrypt.compare(req.body.password, userFound.password)
+        // Compare le mot de passe de la requête avec celui de la base de donnée
+        const match = await bcrypt.compare(req.body.password, userFound.password)
 
-            // Si le mot de passe n'est pas valide
-            if (!match) {
-                return res.status(401).json({ error: 'Utilisateur ou mot de passe invalide !' })
-            }
-            
-            // Si le mot de passe et l'email sont valide
-            res.status(200).json({ userId: userFound._id, token: jwt.sign({ userId: userFound._id }, process.env.RANDOM_TOKEN, { expiresIn: '24h' })}) 
-
-        } catch {
-            res.status(401).json({ error: 'Une erreur est survenue !' })
-        }  
+        // Si le mot de passe n'est pas valide
+        if (!match) {
+            return res.status(401).json({ error: 'Utilisateur ou mot de passe invalide !' })
+        }
+        
+        // Si le mot de passe et l'email sont valide
+        res.status(200).json({ userId: userFound._id, token: jwt.sign({ userId: userFound._id }, process.env.RANDOM_TOKEN, { expiresIn: '24h' })}) 
+ 
     } catch (error) {
-        res.status(500).json
+        res.status(500).json()
         console.log(error)
     }
 }
