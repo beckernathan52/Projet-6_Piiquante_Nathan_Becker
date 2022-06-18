@@ -27,6 +27,7 @@ appExpress.set('port', port);
 
 // Recherche les différentes erreurs et les gère de manière appropriée.
 const errorHandler = error => {
+    console.log(error)
     if (error.syscall !== 'listen') {
         throw error;
     }
