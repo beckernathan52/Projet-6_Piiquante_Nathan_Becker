@@ -16,3 +16,8 @@ Projet n°6: "Construisez une API sécurisée pour une application d'avis gastro
 - In 'frontend' folder,  run <code>npm install</code> for installing all the dependencies.
 
 - Run <code>npm run start</code> and open your browser on "localhost:4200"
+
+
+# Test API
+
+For test this API, the password need to contain between 8 & 20 characters with an uppercase, number and special characters.
