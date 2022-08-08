@@ -14,7 +14,7 @@ const authentication =  (req, res, next) => {
         const userId = decodedToken.userId;
         // Ajout de l'ID utilisateur à la requête
         req.auth = { userId };  
-
+        
         next();
         
     } catch (error) {
@@ -24,7 +24,3 @@ const authentication =  (req, res, next) => {
 }
 
 export {authentication}
-
-
-
-// Voir avec Florian pour les problèmes d'authentification
